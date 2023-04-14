@@ -45,12 +45,10 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags:
-            - rvascons/frontend:latest
+          tags: rvascons/frontend:latest
       - name: Build and push backend Docker image
         uses: docker/build-push-action@v2
         with:
           context: ./backend
           push: true
-          tags:
-            - rvascons/backend:latest
+          tags: rvascons/backend:latest
