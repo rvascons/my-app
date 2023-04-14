@@ -35,9 +35,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build and push Docker images
         uses: docker/build-push-action@v2
-          with:
-            context: .
-            push: true
-            tags:
-              - rvascons/frontend:latest
-              - rvascons/backend:latest
+        with:
+          context: .
+          push: true
+          tags:
+            - rvascons/frontend:latest
+            - rvascons/backend:latest
