@@ -12,19 +12,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
-      - name: Install dependencies and run tests for frontend
-        run: |
-          cd frontend
-          npm ci
-          npm test
-      - name: Install dependencies and run tests for backend
+          cache: 'pnpm'
+      - name: Install dependencies for backend
         run: |
           cd backend
-          npm ci
-          npm test
+          pnpm install
+      - name: Install dependencies for frontend
+        run: |
+          cd frontend
+          pnpm install
+      - name: Run tests
+        run: npm test
 
   deploy:
     needs: build
@@ -44,10 +45,12 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: rvascons/frontend:latest
+          tags:
+            - rvascons/frontend:latest
       - name: Build and push backend Docker image
         uses: docker/build-push-action@v2
         with:
           context: ./backend
           push: true
-          tags: rvascons/backend:latest
+          tags:
+            - rvascons/backend:latest
